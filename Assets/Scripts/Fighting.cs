@@ -65,6 +65,7 @@ public class Fighting : MonoBehaviour
     {
         winMenu.SetActive(true);
         player.mood += 0.75f;
+        player.money += Random.Range(5, 100);
     }
 
     private void Lose()

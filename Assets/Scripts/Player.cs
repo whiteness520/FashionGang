@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [Range(0, 100)] public int health;
     [Range(0, 100)] public int strength;
     public int perfomance; // Успеваемост
-    [Range(0, 3f)] public float mood;
+    [Range(-1f, 3f)] public float mood;
 
     [Header("UI")]
     public TMP_Text healthText;
@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
 
     public NameGetter nameGetter;
     public GameObject mainMenu;
+    public GameObject allWindows;
+    public GameObject gameOverWindow;
 
     private void Start()
     {
@@ -53,10 +55,14 @@ public class Player : MonoBehaviour
         perfomanceText.text = "Успеваемость: " + perfomance;
         healthSlider.value = health;
 
+        if (mood == -1)
+        {
+            GameOver();
+        }
 
         if (mood <= 0)
             moodText.text = "Настроение: Да я сейчас вскроюсь";
-        if (mood >= 0)
+        if (mood > 0)
             moodText.text = "Настроение: Ужасное";
         if (mood >= 1)
             moodText.text = "Настроение: Среднее";
@@ -66,6 +72,9 @@ public class Player : MonoBehaviour
 
     public void GameOver()
     {
-        // Логика смерти
+        gameOverWindow.SetActive(true);
+        Time.timeScale = 0f;
+        transform.gameObject.SetActive(false);
+        allWindows.SetActive(false);
     }
 }
