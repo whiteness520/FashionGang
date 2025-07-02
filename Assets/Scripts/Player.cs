@@ -6,12 +6,17 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
+    public GameInit gameInit;
     public string playerName;
     public int money;
     [Range(0, 100)] public int health;
     [Range(0, 100)] public int strength;
     public int perfomance; // Успеваемост
     [Range(-1f, 3f)] public float mood;
+
+    public bool canGetMoney;
+
+    public Item[] items;
 
     [Header("UI")]
     public TMP_Text healthText;
@@ -22,13 +27,14 @@ public class Player : MonoBehaviour
     public TMP_Text perfomanceText;
     public TMP_Text moodText;
 
-    public NameGetter nameGetter;
+    private NameGetter nameGetter;
     public GameObject mainMenu;
     public GameObject allWindows;
     public GameObject gameOverWindow;
 
     private void Start()
     {
+        nameGetter = gameInit.GetNameGetter();
         playerName = PlayerPrefs.GetString("PlayerName");
         if (playerName == "")
             nameGetter.Turn();
@@ -38,7 +44,27 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        Mathf.Clamp(money, 0, 30000);
+        Mathf.Clamp(health, 0, 100);
+        Mathf.Clamp(strength, 0, 100);
+        Mathf.Clamp(mood, -1f, 3f);
         DataUpdate();
+    }
+
+        private int lastEmptySlot; private int currentSlot;
+    public void GetNewItem(Item newItem)
+    {
+        foreach (Item item in items)
+        {
+            currentSlot++;
+            if (item == null)
+            {
+                lastEmptySlot = currentSlot;
+                break;
+            }
+        }
+
+        items[currentSlot] = newItem;
     }
 
     public void DataUpdate()
@@ -55,7 +81,7 @@ public class Player : MonoBehaviour
         perfomanceText.text = "Успеваемость: " + perfomance;
         healthSlider.value = health;
 
-        if (mood == -1)
+        if (mood <= -0.9f)
         {
             GameOver();
         }
@@ -76,5 +102,15 @@ public class Player : MonoBehaviour
         Time.timeScale = 0f;
         transform.gameObject.SetActive(false);
         allWindows.SetActive(false);
+    }
+
+        
+    public void GetMoney()
+    {
+        if (canGetMoney)
+        {
+            money += Random.Range(0, 3000);
+            canGetMoney = false;
+        }
     }
 }
