@@ -61,7 +61,7 @@ public class Sports : MonoBehaviour
         {
             chinUpsSuccess.SetActive(true);
             
-            player.strength += 5;
+            player.strength += 13;
             player.mood += 1f;
             player.health += 5;
         }
@@ -89,7 +89,7 @@ public class Sports : MonoBehaviour
                 gymSuccess.SetActive(true);
                 
                 player.health -= 5;
-                player.strength += 10;
+                player.strength += 30;
                 player.mood += 1f;
             }
         }
