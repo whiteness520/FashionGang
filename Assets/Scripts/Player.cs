@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
             }
         }
 
+            if (currentSlot < items.Length)
         items[currentSlot] = newItem;
     }
 
