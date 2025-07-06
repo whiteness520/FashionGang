@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [Range(-1f, 3f)] public float mood;
     [Range(-1f, 3f)] public float parents;
     public bool policeSearch;
+    private float policeSearchTime;
 
     public bool canGetMoney;
 
@@ -52,6 +53,15 @@ public class Player : MonoBehaviour
         Mathf.Clamp(strength, 0, 100);
         Mathf.Clamp(mood, -1f, 3f);
         DataUpdate();
+
+        if (policeSearch)
+        {
+            if (policeSearchTime <= Time.time)
+            {
+                policeSearch = false;
+                Jail();
+            }
+        }
     }
 
         private int lastEmptySlot; private int currentSlot;
@@ -116,12 +126,41 @@ public class Player : MonoBehaviour
             parentsText.text = "Отношения с родаками: Гуд";
     }
 
+
+
+    public void StartPoliceSearch()
+    {
+        actionsToStopSearch = 3;
+        policeSearchTime = Time.time + 60f;
+        policeSearch = true;
+    }
+
+        private int actionsToStopSearch;
+    public void PoliceSearchDown() 
+    {
+        actionsToStopSearch--;
+
+        if (actionsToStopSearch <= 0)
+        {
+            policeSearchTime = 0f;
+            policeSearch = false;
+        }
+    }
+
+
+
     public void GameOver()
     {
         gameOverWindow.SetActive(true);
         Time.timeScale = 0f;
         transform.gameObject.SetActive(false);
         allWindows.SetActive(false);
+    }
+
+
+    public void Jail()
+    {
+        Debug.Log("Jailed");
     }
 
         
