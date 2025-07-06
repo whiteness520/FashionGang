@@ -1,5 +1,3 @@
-// using System.Collections;
-// using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -13,6 +11,8 @@ public class Player : MonoBehaviour
     [Range(0, 100)] public int strength;
     public int perfomance; // Успеваемост
     [Range(-1f, 3f)] public float mood;
+    [Range(-1f, 3f)] public float parents;
+    public bool policeSearch;
 
     public bool canGetMoney;
 
@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     public TMP_Text strengthText;
     public TMP_Text perfomanceText;
     public TMP_Text moodText;
+    public GameObject police;
+    public TMP_Text parentsText;
+
 
     private NameGetter nameGetter;
     public GameObject mainMenu;
@@ -95,6 +98,22 @@ public class Player : MonoBehaviour
             moodText.text = "Настроение: Среднее";
         if (mood >= 2)
             moodText.text = "Настроение: Ништяк";
+
+
+        if (policeSearch)
+            police.SetActive(true);
+        else
+            police.SetActive(false);
+
+
+        if (parents <= 0)
+            parentsText.text = "Отношения с родаками: Очень плохие";
+        if (parents > 0)
+            parentsText.text = "Отношения с родаками: Плохие";
+        if (parents >= 1)
+            parentsText.text = "Отношения с родаками: Нормальные";
+        if (parents >= 2)
+            parentsText.text = "Отношения с родаками: Гуд";
     }
 
     public void GameOver()
