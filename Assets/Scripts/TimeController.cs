@@ -3,7 +3,8 @@ using TMPro;
 
 public class TimeController : MonoBehaviour
 {
-    public Player player;
+    public GameInit gameInit;
+    private Player player;
 
     public float gameTime;
     public float startTime;
@@ -32,11 +33,27 @@ public class TimeController : MonoBehaviour
         nextRandomEvent = Random.Range(2, 4);
     }
 
+        private void Start()
+        {
+            player = gameInit.GetPlayer();
+        }
+
+        int nextDayToGetMoney = 1;
     private void Update()
     {
         DateTimeCompute();
-
         CalendarEvents();
+
+        if (days == nextDayToGetMoney)
+        {
+            nextDayToGetMoney += 6;
+            player.canGetMoney = true;
+        }
+
+        if (gameInit.gameOverDate == days)
+        {
+            player.GameOver();
+        }
 
         DayCycle();
         UIOutput();
@@ -44,8 +61,6 @@ public class TimeController : MonoBehaviour
 
 //      3) Система распределения рандомных событий во времени
 //      4) Конец игры при простое >17 дней. 
-//      5) Окно ежемесячного отчета. (Отдать долг, заплатить налог)
-//      6) Календарь привоза (индикатор). Привоз бывает раз в неделю.
 
         private int nextRandomEvent;
         private int nextShopReturn = 7;

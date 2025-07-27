@@ -5,11 +5,17 @@ using TMPro;
 
 public class NameGetter : MonoBehaviour
 {
-    public Player player;
+    public GameInit gameInit;
+    private Player player;
 
     public TMP_InputField inputField;
     public GameObject nameGetterMenu;
     public GameObject nextMenu;
+
+    public void Start()
+    {
+        player = gameInit.GetPlayer();
+    }
 
     public void Turn()
     {
