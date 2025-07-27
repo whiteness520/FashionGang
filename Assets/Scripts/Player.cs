@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
 
     private NameGetter nameGetter;
     public GameObject mainMenu;
+    public GameObject jailMenu;
     public GameObject allWindows;
     public GameObject gameOverWindow;
 
@@ -130,21 +131,8 @@ public class Player : MonoBehaviour
 
     public void StartPoliceSearch()
     {
-        actionsToStopSearch = 3;
         policeSearchTime = Time.time + 60f;
         policeSearch = true;
-    }
-
-        private int actionsToStopSearch;
-    public void PoliceSearchDown() 
-    {
-        actionsToStopSearch--;
-
-        if (actionsToStopSearch <= 0)
-        {
-            policeSearchTime = 0f;
-            policeSearch = false;
-        }
     }
 
 
@@ -160,10 +148,11 @@ public class Player : MonoBehaviour
 
     public void Jail()
     {
-        Debug.Log("Jailed");
+        allWindows.SetActive(false);
+        jailMenu.SetActive(true);
     }
 
-        
+
     public void GetMoney()
     {
         if (canGetMoney)

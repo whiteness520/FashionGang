@@ -41,6 +41,9 @@ public class Sports : MonoBehaviour
     {
         mainMenu.SetActive(false);
         sportsMenu.SetActive(true);
+
+        if (Random.Range(0f, 100f) <= 10f)
+            player.Jail();
     }
 
     public void ChinUps()

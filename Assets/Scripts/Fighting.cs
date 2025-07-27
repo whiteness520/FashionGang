@@ -42,6 +42,12 @@ public class Fighting : MonoBehaviour
         ProbabilityCompute();
         fightingMenu.SetActive(true);
         mainMenu.SetActive(false);
+
+        if (Random.Range(0f, 100f) <= 10f)
+        {
+            Return();
+            player.Jail();
+        }
     }
 
     private void ProbabilityCompute()
